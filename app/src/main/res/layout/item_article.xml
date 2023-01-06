@@ -5,7 +5,7 @@
    <data>
       <variable
          name="model"
-         type="ggack.newsclip.data.ArticleModel"/>
+         type="ggack.newsclip.data.models.ArticleModel"/>
       <variable
          name="vm"
          type="ggack.newsclip.main.MainViewModel" />

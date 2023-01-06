@@ -7,8 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import ggack.newsclip.data.ArticleModel
+import androidx.recyclerview.widget.ItemTouchHelper
+import ggack.newsclip.data.models.ArticleModel
 import ggack.newsclip.databinding.FragmentArticleListBinding
+import ggack.newsclip.utils.listswipe.ItemTouchHelperCallback
 
 /**
  * A fragment representing a list of Items.
@@ -34,12 +36,13 @@ class ArticleListFragment : Fragment() {
         binding = FragmentArticleListBinding.inflate(inflater, container, false)
 
         binding?.list?.layoutManager = LinearLayoutManager(context)
-        binding?.list?.adapter = ArticleAdapter(mListItems)
-        viewModel.liveListArticle.observe(viewLifecycleOwner) {
+        val adapter = ArticleAdapter(mListItems)
+        ItemTouchHelper(ItemTouchHelperCallback(adapter)).attachToRecyclerView(binding?.list)
+        binding?.list?.adapter = adapter
+            viewModel.liveListArticle.observe(viewLifecycleOwner) {
             it.forEach {model ->
                 mListItems.add(model)
                 binding?.list?.adapter?.notifyItemInserted(mListItems.lastIndex)
-
             }
         }
 

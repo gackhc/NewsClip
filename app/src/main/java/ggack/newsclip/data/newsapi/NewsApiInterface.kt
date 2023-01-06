@@ -1,5 +1,6 @@
-package ggack.newsclip.data
+package ggack.newsclip.data.newsapi
 
+import ggack.newsclip.data.models.NewsModel
 import retrofit2.http.GET
 import retrofit2.http.Query
 

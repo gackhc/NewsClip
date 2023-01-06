@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import ggack.newsclip.data.ArticleModel
+import ggack.newsclip.data.models.ArticleModel
 import ggack.newsclip.databinding.FragmentArticleListBinding
 
 /**

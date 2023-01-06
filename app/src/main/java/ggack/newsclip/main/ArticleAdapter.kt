@@ -1,19 +1,14 @@
 package ggack.newsclip.main
 
-import androidx.recyclerview.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import ggack.newsclip.data.ArticleModel
-
+import androidx.recyclerview.widget.RecyclerView
+import ggack.newsclip.data.models.ArticleModel
 import ggack.newsclip.databinding.ItemArticleBinding
+import ggack.newsclip.utils.listswipe.ItemTouchHelperListener
 
-/**
- * [RecyclerView.Adapter] that can display a [PlaceholderItem].
- * TODO: Replace the implementation with code for your data type.
- */
-class ArticleAdapter(
-    private val values: List<ArticleModel>
-) : RecyclerView.Adapter<ArticleAdapter.ViewHolder>() {
+class ArticleAdapter(private val values: List<ArticleModel>) : RecyclerView.Adapter<ArticleAdapter.ViewHolder>(), ItemTouchHelperListener {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -36,5 +31,10 @@ class ArticleAdapter(
         fun bind(item : ArticleModel, position : Int) {
             binding.model = item
         }
+    }
+
+    override fun onSwipe(position: Int) {
+        Log.e("debug", position.toString())
+        notifyItemChanged(position)
     }
 }

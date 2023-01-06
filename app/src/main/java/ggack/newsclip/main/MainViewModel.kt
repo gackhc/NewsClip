@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ggack.newsclip.Constants
-import ggack.newsclip.data.ArticleModel
-import ggack.newsclip.data.NewsApi
+import ggack.newsclip.data.models.ArticleModel
+import ggack.newsclip.data.newsapi.NewsApi
 import ggack.newsclip.data.models.EventModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

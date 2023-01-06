@@ -1,4 +1,4 @@
-package ggack.newsclip.data
+package ggack.newsclip.data.newsapi
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory

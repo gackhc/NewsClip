@@ -7,10 +7,8 @@ import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import coil.load
 import ggack.newsclip.R
-import ggack.newsclip.data.MultimediaModel
+import ggack.newsclip.data.models.MultimediaModel
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 class BindingAdapters {
 }
