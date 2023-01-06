@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+   xmlns:app="http://schemas.android.com/apk/res-auto">
+
+   <data>
+      <variable
+         name="model"
+         type="ggack.newsclip.data.ArticleModel"/>
+      <variable
+         name="vm"
+         type="ggack.newsclip.main.MainViewModel" />
+   </data>
+
+   <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:padding="10dp">
+      <ImageView
+         android:id="@+id/iv"
+         android:layout_width="0dp"
+         android:layout_height="0dp"
+         android:padding="5dp"
+         android:adjustViewBounds="true"
+         android:scaleType="fitXY"
+         app:setImgUrl="@{model.multimedia}"
+         app:layout_constraintDimensionRatio="1.5"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent"
+         app:layout_constraintBottom_toBottomOf="parent"
+         />
+      <TextView
+         android:id="@+id/tvTitle"
+         android:layout_width="0dp"
+         android:layout_height="wrap_content"
+         android:layout_marginHorizontal="@dimen/dimen_margin_normal"
+         android:textSize="@dimen/dimen_text_title"
+         android:text="@{model.headline.text}"
+         android:maxLines="2"
+         app:layout_constraintStart_toEndOf="@id/iv"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintTop_toTopOf="parent"
+         />
+      <TextView
+         android:id="@+id/tvDate"
+         android:layout_width="0dp"
+         android:layout_height="wrap_content"
+         android:textSize="@dimen/dimen_text_small"
+         android:textColor="@color/gray"
+         android:layout_marginHorizontal="@dimen/dimen_margin_normal"
+         android:layout_marginTop="10dp"
+         android:text="@{model.headline.text}"
+         app:setDate="@{model.date}"
+         app:layout_constraintStart_toEndOf="@id/iv"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintTop_toBottomOf="@id/tvTitle"
+         />
+   </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

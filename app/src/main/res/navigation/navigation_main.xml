@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+   xmlns:app="http://schemas.android.com/apk/res-auto"
+   android:id="@+id/navigation_main"
+   app:startDestination="@id/articleListFragment">
+
+   <fragment
+      android:id="@+id/articleListFragment"
+      android:name="ggack.newsclip.main.ArticleListFragment"
+      android:label="ArticleListFragment" >
+      <action
+         android:id="@+id/action_articleListFragment_to_clipListFragment"
+         app:destination="@id/clipListFragment"
+         app:enterAnim="@anim/anim_slide_right_to_in"
+         app:popEnterAnim="@anim/anim_slide_left_to_in"
+         app:exitAnim="@anim/anim_slide_left_to_out"
+         app:popExitAnim="@anim/anim_slide_right_to_out"/>
+   </fragment>
+   <fragment
+      android:id="@+id/clipListFragment"
+      android:name="ggack.newsclip.main.ClipListFragment"
+      android:label="ClipListFragment" >
+      <action
+         android:id="@+id/action_clipListFragment_to_articleListFragment"
+         app:destination="@id/articleListFragment"
+         app:enterAnim="@anim/anim_slide_left_to_in"
+         app:popEnterAnim="@anim/anim_slide_left_to_in"
+         app:exitAnim="@anim/anim_slide_right_to_out"
+         app:popExitAnim="@anim/anim_slide_right_to_out"/>
+   </fragment>
+</navigation>

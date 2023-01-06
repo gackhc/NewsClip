@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+   xmlns:app="http://schemas.android.com/apk/res-auto"
+   xmlns:tools="http://schemas.android.com/tools">
+
+   <data>
+
+      <variable
+         name="vm"
+         type="ggack.newsclip.main.MainViewModel" />
+   </data>
+   <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+      android:id="@+id/swipeRefreshLayout"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+      <androidx.recyclerview.widget.RecyclerView
+         android:id="@+id/list"
+         android:name="ggack.newsclip.ArticleListFragment"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:layout_marginLeft="16dp"
+         android:layout_marginRight="16dp"
+         app:layoutManager="LinearLayoutManager"
+         tools:context=".main.ArticleListFragment"
+         tools:listitem="@layout/fragment_article_list" />
+   </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</layout>

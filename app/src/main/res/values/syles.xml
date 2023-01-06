@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+   <style name="MyButtonStyle" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+      <item name="android:textColor">@drawable/selector_button_text_color</item>
+      <item name="iconTint">@drawable/selector_button_text_color</item>
+      <item name="iconPadding">0dp</item>
+      <item name="android:backgroundTint">@drawable/selector_button_color</item>
+      <item name="android:stateListAnimator">@null</item>
+      <item name="android:textSize">@dimen/dimen_text_title</item>
+   </style>
+
+</resources>
