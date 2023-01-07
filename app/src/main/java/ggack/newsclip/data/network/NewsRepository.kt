@@ -10,10 +10,12 @@ import javax.inject.Singleton
 
 @Singleton
 class NewsRepository @Inject constructor(private val service : NewsService) {
-    fun getSearchResult(): Flow<PagingData<ArticleModel>> {
+    fun getSearchResult(search : String): Flow<PagingData<ArticleModel>> {
         return Pager(PagingConfig(10)) {
-            NewsPagingSource(service)
+            NewsPagingSource(service, search)
         }.flow
+    }
+    fun setSearchText(str : String) {
 
     }
 }

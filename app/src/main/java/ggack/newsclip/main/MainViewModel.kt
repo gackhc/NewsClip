@@ -21,20 +21,6 @@ class MainViewModel @Inject constructor(private val newsRepository: NewsReposito
     //val liveListArticle : LiveData<List<ArticleModel>> = (_liveListArticle)
     val liveListClip : LiveData<List<ArticleModel>> = clipRepository.clipList.asLiveData()
     val flowListArticle = newsRepository.getSearchResult().cachedIn(viewModelScope)
-    fun getArticles() {
-//        viewModelScope.launch {
-//            try {
-//                val result = newsService.articleSearch("kijN6KuzTKPChAwMTGXnx5GGrgfAX96X", "print_page:1","election")
-//                result.response?.docs?.let{
-//                    _liveListArticle.postValue(it)
-//                } ?.run {
-//                    Log.e("MainViewModel", "${result.status} failed to get articles")
-//                }
-//            } catch (e : Exception) {
-//                Log.e("MainViewModel", "failed to get articles : $e ")
-//            }
-//        }
-    }
 
     fun startClipFragment() {
         liveEvent.postValue(EventModel(Constants.ACTION_START_FRAGMENT_CLIP))

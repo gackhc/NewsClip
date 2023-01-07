@@ -9,13 +9,12 @@ import ggack.newsclip.data.models.ArticleModel
 import javax.inject.Inject
 import javax.inject.Singleton
 
-class NewsPagingSource(private val service : NewsService) : PagingSource<Int, ArticleModel>() {
-    private var mSearch = ""
+class NewsPagingSource(private val service : NewsService, private val search : String) : PagingSource<Int, ArticleModel>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ArticleModel> {
         val position = params.key ?: 1
         return try {
-            val response = service.articleSearch("kijN6KuzTKPChAwMTGXnx5GGrgfAX96X", "print_page:$position", mSearch)
+            val response = service.articleSearch("kijN6KuzTKPChAwMTGXnx5GGrgfAX96X", "print_page:$position", search)
             LoadResult.Page(
                 response.response.docs,
                 if(position == 1) null else position - 1,

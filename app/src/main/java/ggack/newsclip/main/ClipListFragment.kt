@@ -28,6 +28,7 @@ class ClipListFragment : Fragment() {
     ): View? {
         binding = FragmentArticleListBinding.inflate(inflater, container, false)
 
+        binding?.swipeRefreshLayout?.isEnabled = false
         binding?.list?.layoutManager = LinearLayoutManager(context)
         val adapter = ClipAdapter(mListItems, object : ItemSelectListener {
             override fun onSelected(position: Int) {

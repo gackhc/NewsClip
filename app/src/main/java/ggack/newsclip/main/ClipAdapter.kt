@@ -33,7 +33,9 @@ class ClipAdapter(private val values: List<ArticleModel>, private val listener: 
     }
 
     override fun onSwipe(position: Int) {
-        notifyItemChanged(position)
-        listener.onSwipe(position, values[position])
+        if(itemCount > position) {
+            notifyItemChanged(position)
+            listener.onSwipe(position, values[position])
+        }
     }
 }
