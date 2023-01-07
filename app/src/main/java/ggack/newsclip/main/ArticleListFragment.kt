@@ -6,11 +6,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import ggack.newsclip.data.models.ArticleModel
 import ggack.newsclip.databinding.FragmentArticleListBinding
 import ggack.newsclip.utils.listswipe.ItemTouchHelperCallback
+import javax.inject.Inject
 
 /**
  * A fragment representing a list of Items.
@@ -36,10 +38,18 @@ class ArticleListFragment : Fragment() {
         binding = FragmentArticleListBinding.inflate(inflater, container, false)
 
         binding?.list?.layoutManager = LinearLayoutManager(context)
-        val adapter = ArticleAdapter(mListItems)
+        val adapter = ArticleAdapter(mListItems, object : ItemSelectListener {
+            override fun onSelected(position: Int) {
+
+            }
+            override fun onSwipe(position: Int) {
+                viewModel.insertArticleToClip(mListItems[position])
+                Toast.makeText(requireContext(), "저장되었습니다.", Toast.LENGTH_SHORT).show()
+            }
+        })
         ItemTouchHelper(ItemTouchHelperCallback(adapter)).attachToRecyclerView(binding?.list)
         binding?.list?.adapter = adapter
-            viewModel.liveListArticle.observe(viewLifecycleOwner) {
+        viewModel.liveListArticle.observe(viewLifecycleOwner) {
             it.forEach {model ->
                 mListItems.add(model)
                 binding?.list?.adapter?.notifyItemInserted(mListItems.lastIndex)

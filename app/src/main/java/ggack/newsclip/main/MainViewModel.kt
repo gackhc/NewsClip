@@ -1,27 +1,27 @@
 package ggack.newsclip.main
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ggack.newsclip.Constants
+import ggack.newsclip.data.db.ClipRepository
 import ggack.newsclip.data.models.ArticleModel
-import ggack.newsclip.data.newsapi.NewsApi
-import ggack.newsclip.data.models.EventModel
+import ggack.newsclip.data.newsapi.NewsRepository
+import ggack.newsclip.data.EventModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor() : ViewModel(){
+class MainViewModel @Inject constructor(private val newsApi: NewsRepository, private val clipRepository: ClipRepository) : ViewModel(){
     val liveEvent = MutableLiveData<EventModel?>(null)
     private val _liveListArticle = MutableLiveData<List<ArticleModel>>(listOf())
-    val liveListArticle : LiveData<List<ArticleModel>> =(_liveListArticle)
+    val liveListArticle : LiveData<List<ArticleModel>> = (_liveListArticle)
+    val liveListClip : LiveData<List<ArticleModel>> = clipRepository.clipList.asLiveData()
+
     fun getArticles() {
         viewModelScope.launch {
             try {
-                val result = NewsApi.retrofitService.articleSearch("kijN6KuzTKPChAwMTGXnx5GGrgfAX96X", "print_page:1","election")
+                val result = newsApi.retrofitService.articleSearch("kijN6KuzTKPChAwMTGXnx5GGrgfAX96X", "print_page:1","election")
                 result.response?.docs?.let{
                     _liveListArticle.postValue(it)
                 } ?.run {
@@ -38,5 +38,15 @@ class MainViewModel @Inject constructor() : ViewModel(){
     }
     fun startArticleFragment() {
         liveEvent.postValue(EventModel(Constants.ACTION_START_FRAGMENT_ARTICLE))
+    }
+    fun insertArticleToClip(article : ArticleModel) {
+        viewModelScope.launch {
+            clipRepository.insert(article)
+        }
+    }
+    fun deleteArticleFromClip(article: ArticleModel) {
+        viewModelScope.launch {
+            //clipRepository.delete(article)
+        }
     }
 }

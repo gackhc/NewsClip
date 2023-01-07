@@ -1,15 +1,17 @@
 package ggack.newsclip.main
 
+import android.net.wifi.p2p.WifiP2pManager.NetworkInfoListener
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.AdapterView.OnItemSelectedListener
 import androidx.recyclerview.widget.RecyclerView
+import dagger.hilt.android.scopes.ActivityScoped
 import ggack.newsclip.data.models.ArticleModel
 import ggack.newsclip.databinding.ItemArticleBinding
 import ggack.newsclip.utils.listswipe.ItemTouchHelperListener
 
-class ArticleAdapter(private val values: List<ArticleModel>) : RecyclerView.Adapter<ArticleAdapter.ViewHolder>(), ItemTouchHelperListener {
-
+class ArticleAdapter(private val values: List<ArticleModel>, private val listener: ItemSelectListener) : RecyclerView.Adapter<ArticleAdapter.ViewHolder>(), ItemTouchHelperListener {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             ItemArticleBinding.inflate(
@@ -34,7 +36,7 @@ class ArticleAdapter(private val values: List<ArticleModel>) : RecyclerView.Adap
     }
 
     override fun onSwipe(position: Int) {
-        Log.e("debug", position.toString())
         notifyItemChanged(position)
+        listener.onSwipe(position)
     }
 }

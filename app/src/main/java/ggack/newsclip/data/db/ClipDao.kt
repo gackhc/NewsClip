@@ -6,18 +6,19 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import ggack.newsclip.data.models.ArticleModel
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ClipDao {
     @Query("SELECT * FROM ArticleModel")
-    fun getAll() : List<ArticleModel>
+    fun getAll() : Flow<List<ArticleModel>>
 
     @Query("SELECT * FROM ArticleModel WHERE date IS :date")
-    fun getByDate(date : String) : ArticleModel
+    suspend fun getByDate(date : String) : ArticleModel
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(article : ArticleModel)
+    suspend fun insert(article : ArticleModel)
 
     @Delete
-    fun delete(article : ArticleModel)
+    suspend fun delete(article : ArticleModel)
 }

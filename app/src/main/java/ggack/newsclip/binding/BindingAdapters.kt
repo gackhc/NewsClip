@@ -16,7 +16,7 @@ class BindingAdapters {
 @SuppressLint("SimpleDateFormat")
 @BindingAdapter("app:setDate")
 fun setDate(v : TextView, strDate : String) {
-    // "2022-12-30T03:41:58+0000"
+    // "2022-12-30T03:41:58+0000"strDate
     val sdfSource = SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ")
     val sdfTarget = SimpleDateFormat("yyyy년 MM월 dd일")
     val date = sdfSource.parse(strDate.replace("T", " "))
