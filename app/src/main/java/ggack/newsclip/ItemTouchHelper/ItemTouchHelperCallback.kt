@@ -1,9 +1,7 @@
-package ggack.newsclip.utils.listswipe
+package ggack.newsclip.ItemTouchHelper
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import dagger.hilt.android.scopes.ActivityScoped
-import javax.inject.Inject
 
 class ItemTouchHelperCallback(private val listener: ItemTouchHelperListener) : ItemTouchHelper.Callback() {
     override fun getMovementFlags(

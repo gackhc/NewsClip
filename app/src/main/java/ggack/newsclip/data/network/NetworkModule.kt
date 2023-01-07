@@ -6,7 +6,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import ggack.newsclip.data.newsapi.NewsInterface
+import ggack.newsclip.data.network.NewsService
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
@@ -27,8 +27,8 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideNewsApiInterface(retrofit: Retrofit): NewsInterface {
-        return retrofit.create(NewsInterface::class.java)
+    fun provideNewsApiInterface(retrofit: Retrofit): NewsService {
+        return retrofit.create(NewsService::class.java)
     }
 
     @Provides

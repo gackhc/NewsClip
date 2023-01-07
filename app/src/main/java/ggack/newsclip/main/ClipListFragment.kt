@@ -11,7 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import ggack.newsclip.data.models.ArticleModel
 import ggack.newsclip.databinding.FragmentArticleListBinding
-import ggack.newsclip.utils.listswipe.ItemTouchHelperCallback
+import ggack.newsclip.ItemTouchHelper.ItemTouchHelperCallback
 
 /**
  * A fragment representing a list of Items.
@@ -22,14 +22,6 @@ class ClipListFragment : Fragment() {
     private var columnCount = 1
     private val mListItems = mutableListOf<ArticleModel>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        arguments?.let {
-            columnCount = it.getInt(ARG_COLUMN_COUNT)
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,15 +29,17 @@ class ClipListFragment : Fragment() {
         binding = FragmentArticleListBinding.inflate(inflater, container, false)
 
         binding?.list?.layoutManager = LinearLayoutManager(context)
-        val adapter = ArticleAdapter(mListItems, object : ItemSelectListener {
+        val adapter = ClipAdapter(mListItems, object : ItemSelectListener {
             override fun onSelected(position: Int) {
             }
 
-            override fun onSwipe(position: Int) {
-                viewModel.deleteArticleFromClip(mListItems[position])
-                mListItems.removeAt(position)
-                binding?.list?.adapter?.notifyItemRemoved(position)
-                Toast.makeText(requireContext(), "삭제되었습니다", Toast.LENGTH_SHORT).show()
+            override fun onSwipe(position: Int, data : Any?) {
+                data?.let {
+                    viewModel.deleteArticleFromClip(data as ArticleModel)
+                    mListItems.removeAt(position)
+                    binding?.list?.adapter?.notifyItemRemoved(position)
+                    Toast.makeText(requireContext(), "삭제되었습니다", Toast.LENGTH_SHORT).show()
+                }
             }
         })
         ItemTouchHelper(ItemTouchHelperCallback(adapter)).attachToRecyclerView(binding?.list)
@@ -60,20 +54,5 @@ class ClipListFragment : Fragment() {
             }
         }
         return binding?.root
-    }
-
-    companion object {
-
-        // TODO: Customize parameter argument names
-        const val ARG_COLUMN_COUNT = "column-count"
-
-        // TODO: Customize parameter initialization
-        @JvmStatic
-        fun newInstance(columnCount: Int) =
-            ClipListFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(ARG_COLUMN_COUNT, columnCount)
-                }
-            }
     }
 }

@@ -1,4 +1,4 @@
-package ggack.newsclip.utils.listswipe
+package ggack.newsclip.ItemTouchHelper
 
 interface ItemTouchHelperListener {
     fun onSwipe(position : Int)
