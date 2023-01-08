@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import ggack.newsclip.data.models.ArticleModel
+import ggack.newsclip.data.ArticleModel
 import ggack.newsclip.databinding.ItemArticleBinding
-import ggack.newsclip.ItemTouchHelper.ItemTouchHelperListener
+import ggack.newsclip.itemtouchhelper.ItemTouchHelperListener
 
 class ArticleAdapter(private val listener: ItemSelectListener)
     : PagingDataAdapter<ArticleModel, ArticleAdapter.ViewHolder>(COMPARATOR),
@@ -25,13 +25,14 @@ class ArticleAdapter(private val listener: ItemSelectListener)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
         item?.let {
-            holder.bind(item, position)
+            holder.bind(item)
         }
     }
 
     inner class ViewHolder(val binding: ItemArticleBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item : ArticleModel, position : Int) {
+        fun bind(item : ArticleModel) {
             binding.model = item
+            binding.listener = listener
         }
     }
 

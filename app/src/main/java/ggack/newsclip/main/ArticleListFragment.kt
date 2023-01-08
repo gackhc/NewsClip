@@ -1,20 +1,21 @@
 package ggack.newsclip.main
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import ggack.newsclip.data.models.ArticleModel
+import ggack.newsclip.data.ArticleModel
 import ggack.newsclip.databinding.FragmentArticleListBinding
-import ggack.newsclip.ItemTouchHelper.ItemTouchHelperCallback
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import ggack.newsclip.itemtouchhelper.ItemTouchHelperCallback
+import ggack.newsclip.webview.WebViewActivity
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -24,18 +25,21 @@ import kotlinx.coroutines.launch
 class ArticleListFragment : Fragment() {
     private var binding : FragmentArticleListBinding? = null
     private val viewModel by activityViewModels<MainViewModel>()
-    private val mListItems = mutableListOf<ArticleModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentArticleListBinding.inflate(inflater, container, false)
-
+        binding?.vm = viewModel
+        binding?.lifecycleOwner = viewLifecycleOwner
         binding?.list?.layoutManager = LinearLayoutManager(context)
         val adapter = ArticleAdapter(object : ItemSelectListener {
-            override fun onSelected(position: Int) {
-
+            override fun onSelected(data : Any?) {
+                val url = (data as String?)?:""
+                val intent = Intent(requireContext(), WebViewActivity::class.java)
+                intent.putExtra("url", url)
+                startActivity(intent)
             }
             override fun onSwipe(position: Int, data : Any?) {
                 data?.let {
@@ -45,12 +49,24 @@ class ArticleListFragment : Fragment() {
             }
         })
         ItemTouchHelper(ItemTouchHelperCallback(adapter)).attachToRecyclerView(binding?.list)
-        CoroutineScope(Dispatchers.Main).launch {
-            viewModel.flowListArticle.collectLatest {
-                mListItems.toList().forEach {
-                    Log.e("debug", it.headline.text)
+        lifecycleScope.launch {
+            adapter.loadStateFlow.collectLatest {state ->
+                when (state.refresh) {
+                    is LoadState.Loading -> {
+                        binding?.swipeRefreshLayout?.isRefreshing = true
+                    }
+                    is LoadState.NotLoading -> {
+                        binding?.swipeRefreshLayout?.isRefreshing = false
+                    }
+                    is LoadState.Error -> {
+                        binding?.swipeRefreshLayout?.isRefreshing = false
+                        Toast.makeText(requireContext(), (state.refresh as LoadState.Error).error.toString(), Toast.LENGTH_SHORT).show()
+                    }
                 }
-                binding?.swipeRefreshLayout?.isRefreshing = false
+            }
+        }
+        viewModel.liveListArticle.observe(viewLifecycleOwner) {
+            lifecycleScope.launch {
                 adapter.submitData(it)
             }
         }

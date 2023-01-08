@@ -1,13 +1,10 @@
-package ggack.newsclip.data.models
+package ggack.newsclip.data
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.ProvidedAutoMigrationSpec
 import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
 import com.squareup.moshi.Json
-import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import javax.inject.Inject

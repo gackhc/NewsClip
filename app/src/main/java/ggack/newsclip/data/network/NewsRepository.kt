@@ -3,7 +3,7 @@ package ggack.newsclip.data.network
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import ggack.newsclip.data.models.ArticleModel
+import ggack.newsclip.data.ArticleModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -14,8 +14,5 @@ class NewsRepository @Inject constructor(private val service : NewsService) {
         return Pager(PagingConfig(10)) {
             NewsPagingSource(service, search)
         }.flow
-    }
-    fun setSearchText(str : String) {
-
     }
 }

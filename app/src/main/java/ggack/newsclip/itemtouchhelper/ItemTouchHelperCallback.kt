@@ -1,4 +1,4 @@
-package ggack.newsclip.ItemTouchHelper
+package ggack.newsclip.itemtouchhelper
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +16,7 @@ class ItemTouchHelperCallback(private val listener: ItemTouchHelperListener) : I
         viewHolder: RecyclerView.ViewHolder,
         target: RecyclerView.ViewHolder
     ): Boolean {
-        return true
+        return false
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {

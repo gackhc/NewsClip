@@ -18,6 +18,7 @@
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          app:iconifiedByDefault="false"
+         android:onQueryTextListener="@{vm.onQueryTextListener}"
          app:layout_constraintTop_toTopOf="parent"/>
       <androidx.fragment.app.FragmentContainerView
          android:id="@+id/container"
@@ -46,7 +47,7 @@
             android:checked="false"
             android:text="Home"
             style="@style/MyButtonStyle"
-            android:onClick="@{() -> vm.startArticleFragment()}"
+            android:onClick="@{(v) ->vm.startArticleFragment()}"
             app:iconSize="30dp" />
          <com.google.android.material.button.MaterialButton
             android:id="@+id/btnFavorite"
@@ -57,7 +58,7 @@
             app:iconGravity="top"
             style="@style/MyButtonStyle"
             android:text="Clip"
-            android:onClick="@{() -> vm.startClipFragment()}"
+            android:onClick="@{(v) -> vm.startClipFragment()}"
             app:iconSize="30dp"/>
 
       </com.google.android.material.button.MaterialButtonToggleGroup>

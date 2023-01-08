@@ -1,5 +1,6 @@
 package ggack.newsclip.main
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,9 +10,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.ItemTouchHelper
-import ggack.newsclip.data.models.ArticleModel
+import ggack.newsclip.data.ArticleModel
 import ggack.newsclip.databinding.FragmentArticleListBinding
-import ggack.newsclip.ItemTouchHelper.ItemTouchHelperCallback
+import ggack.newsclip.itemtouchhelper.ItemTouchHelperCallback
+import ggack.newsclip.webview.WebViewActivity
 
 /**
  * A fragment representing a list of Items.
@@ -27,11 +29,16 @@ class ClipListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentArticleListBinding.inflate(inflater, container, false)
-
+        binding?.vm = viewModel
+        binding?.lifecycleOwner = viewLifecycleOwner
         binding?.swipeRefreshLayout?.isEnabled = false
         binding?.list?.layoutManager = LinearLayoutManager(context)
         val adapter = ClipAdapter(mListItems, object : ItemSelectListener {
-            override fun onSelected(position: Int) {
+            override fun onSelected(data : Any?) {
+                val url = (data as String?)?:""
+                val intent = Intent(requireContext(), WebViewActivity::class.java)
+                intent.putExtra("url", url)
+                startActivity(intent)
             }
 
             override fun onSwipe(position: Int, data : Any?) {

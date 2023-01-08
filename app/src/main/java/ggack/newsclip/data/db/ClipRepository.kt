@@ -1,8 +1,7 @@
 package ggack.newsclip.data.db
 
 import androidx.annotation.WorkerThread
-import dagger.hilt.EntryPoint
-import ggack.newsclip.data.models.ArticleModel
+import ggack.newsclip.data.ArticleModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton

@@ -5,24 +5,26 @@
    <data>
       <variable
          name="model"
-         type="ggack.newsclip.data.models.ArticleModel"/>
+         type="ggack.newsclip.data.ArticleModel"/>
       <variable
-         name="vm"
-         type="ggack.newsclip.main.MainViewModel" />
+         name="listener"
+         type="ggack.newsclip.main.ItemSelectListener" />
    </data>
 
    <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="horizontal"
-      android:padding="10dp">
+      android:background="@drawable/selector_background_color"
+      android:padding="10dp"
+      android:onClick="@{() -> listener.onSelected(model.url)}">
       <ImageView
          android:id="@+id/iv"
          android:layout_height="0dp"
          android:layout_width="0dp"
          android:padding="5dp"
+         android:scaleType="fitCenter"
          android:adjustViewBounds="true"
-         android:scaleType="fitXY"
          app:setImgUrl="@{model.multimedia}"
          app:layout_constraintDimensionRatio="1.5"
          app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +39,7 @@
          android:textSize="@dimen/dimen_text_title"
          android:text="@{model.headline.text}"
          android:maxLines="2"
-          android:lines="2"
+         android:lines="2"
          app:layout_constraintStart_toEndOf="@id/iv"
          app:layout_constraintEnd_toEndOf="parent"
          app:layout_constraintTop_toTopOf="parent"

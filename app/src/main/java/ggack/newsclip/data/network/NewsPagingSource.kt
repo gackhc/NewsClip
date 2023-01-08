@@ -1,13 +1,8 @@
 package ggack.newsclip.data.network
 
-import android.content.Context
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import dagger.hilt.android.qualifiers.ApplicationContext
-import ggack.newsclip.R
-import ggack.newsclip.data.models.ArticleModel
-import javax.inject.Inject
-import javax.inject.Singleton
+import ggack.newsclip.data.ArticleModel
 
 class NewsPagingSource(private val service : NewsService, private val search : String) : PagingSource<Int, ArticleModel>() {
 

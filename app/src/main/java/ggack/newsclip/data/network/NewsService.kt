@@ -1,6 +1,6 @@
 package ggack.newsclip.data.network
 
-import ggack.newsclip.data.models.NewsModel
+import ggack.newsclip.data.NewsModel
 import retrofit2.http.GET
 import retrofit2.http.Query
 

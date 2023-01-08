@@ -1,5 +1,5 @@
 <resources>
-   <string name="app_name">newsclip</string>
-   <string name="api_key">kijN6KuzTKPChAwMTGXnx5GGrgfAX96X</string>
-   <string name="img_url_base">https://static01.nyt.com/</string>
+    <string name="app_name">newsclip</string>
+    <string name="api_key">kijN6KuzTKPChAwMTGXnx5GGrgfAX96X</string>
+    <string name="img_url_base">https://static01.nyt.com/</string>
 </resources>
