@@ -17,9 +17,10 @@ private const val BASE_URL = "https://api.nytimes.com/svc/search/v2/"
 class NetworkModule {
     @Provides
     @Singleton
-    fun provideRetrofit(moshi: Moshi): Retrofit {
+    fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .addConverterFactory(MoshiConverterFactory.create(
+                Moshi.Builder().add(KotlinJsonAdapterFactory()).build()))
             .baseUrl(BASE_URL)
             .build()
     }
@@ -28,13 +29,5 @@ class NetworkModule {
     @Singleton
     fun provideNewsApiInterface(retrofit: Retrofit): NewsService {
         return retrofit.create(NewsService::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideMoshi(): Moshi {
-        return Moshi.Builder()
-            .add(KotlinJsonAdapterFactory())
-            .build()
     }
 }

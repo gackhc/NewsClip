@@ -5,9 +5,8 @@ import androidx.lifecycle.*
 import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ggack.newsclip.Constants
-import ggack.newsclip.data.EventModel
-import ggack.newsclip.data.db.ClipRepository
 import ggack.newsclip.data.ArticleModel
+import ggack.newsclip.data.db.ClipRepository
 import ggack.newsclip.data.network.NewsRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
