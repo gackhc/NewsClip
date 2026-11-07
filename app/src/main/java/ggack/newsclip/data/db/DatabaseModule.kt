@@ -28,7 +28,7 @@ class DatabaseModule {
             "clip_database"
         )
             .addTypeConverter(converter)
-            .addMigrations(AppDataBase.MIGRATION_1_2)
+
             .build()
     }
 }

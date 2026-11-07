@@ -20,7 +20,7 @@ class NetworkModule {
     fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
             .addConverterFactory(MoshiConverterFactory.create(
-                Moshi.Builder().add(KotlinJsonAdapterFactory()).build()))
+                Moshi.Builder().add(ArticleJsonAdapter()).add(KotlinJsonAdapterFactory()).build()))
             .baseUrl(BASE_URL)
             .build()
     }

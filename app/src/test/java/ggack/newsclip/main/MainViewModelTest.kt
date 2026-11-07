@@ -7,7 +7,6 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import ggack.newsclip.Constants
 import ggack.newsclip.data.ArticleModel
 import ggack.newsclip.data.Converters
 import ggack.newsclip.data.HeadLineModel
@@ -58,17 +57,15 @@ class MainViewModelTest {
     }
 
     @Test
-    fun startClipFragment() {
-        viewModel.startClipFragment()
-        val result = viewModel.liveEvent.getOrAwaitValue()
-        assertThat(result?.action, `is`(Constants.ACTION_START_FRAGMENT_CLIP))
+    fun searchTrimsQuery() {
+        viewModel.search("  science  ")
+        assertThat(viewModel.liveSearchText.getOrAwaitValue(), `is`("science"))
     }
 
     @Test
-    fun startArticleFragment() {
-        viewModel.startArticleFragment()
-        val result = viewModel.liveEvent.getOrAwaitValue()
-        assertThat(result?.action, `is`(Constants.ACTION_START_FRAGMENT_ARTICLE))
+    fun blankSearchIsSupported() {
+        viewModel.search("  ")
+        assertThat(viewModel.liveSearchText.getOrAwaitValue(), `is`(""))
     }
 
     private val testArticle = ArticleModel(HeadLineModel("headline_text"), "url_text", "pub_date_text",

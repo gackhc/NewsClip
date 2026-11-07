@@ -1,0 +1,30 @@
+{
+  "status": "OK",
+  "response": {
+    "docs": [
+      {
+        "web_url": "https://www.nytimes.com/2026/11/06/science/science-democrats-congress-election.html",
+        "multimedia": {
+          "caption": "Preparing to redeploy a National Science Foundation data-gathering buoy in the Pacific last month after the Trump administration ordered the network of ocean monitors dismantled earlier this year.",
+          "credit": "Kristina Barker for The New York Times",
+          "default": {
+            "url": "https://static01.nyt.com/images/2026/11/06/multimedia/06SCI-BLUE-SCIENCE-01-fqwp/06SCI-BLUE-SCIENCE-01-fqwp-articleLarge.jpg",
+            "height": 400,
+            "width": 600
+          },
+          "thumbnail": {
+            "url": "https://static01.nyt.com/images/2026/11/06/multimedia/06SCI-BLUE-SCIENCE-01-fqwp/06SCI-BLUE-SCIENCE-01-fqwp-thumbStandard.jpg",
+            "height": 75,
+            "width": 75
+          }
+        },
+        "pub_date": "2026-11-06T10:03:49Z",
+        "headline": {
+          "main": "What a Democratic Congress Could Mean for Science",
+          "kicker": "news analysis",
+          "print_headline": ""
+        }
+      }
+    ]
+  }
+}
