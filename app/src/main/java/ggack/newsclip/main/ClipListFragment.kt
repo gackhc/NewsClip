@@ -21,8 +21,6 @@ import ggack.newsclip.webview.WebViewActivity
 class ClipListFragment : Fragment() {
     private var binding : FragmentArticleListBinding? = null
     private val viewModel by activityViewModels<MainViewModel>()
-    private var columnCount = 1
-    private val mListItems = mutableListOf<ArticleModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,7 +31,7 @@ class ClipListFragment : Fragment() {
         binding?.lifecycleOwner = viewLifecycleOwner
         binding?.swipeRefreshLayout?.isEnabled = false
         binding?.list?.layoutManager = LinearLayoutManager(context)
-        val adapter = ClipAdapter(mListItems, object : ItemSelectListener {
+        val adapter = ClipAdapter(object : ItemSelectListener {
             override fun onSelected(data : Any?) {
                 val url = (data as String?)?:""
                 val intent = Intent(requireContext(), WebViewActivity::class.java)
@@ -44,8 +42,6 @@ class ClipListFragment : Fragment() {
             override fun onSwipe(position: Int, data : Any?) {
                 data?.let {
                     viewModel.deleteArticleFromClip(data as ArticleModel)
-                    mListItems.removeAt(position)
-                    binding?.list?.adapter?.notifyItemRemoved(position)
                     Toast.makeText(requireContext(), "삭제되었습니다", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -54,13 +50,14 @@ class ClipListFragment : Fragment() {
         binding?.list?.adapter = adapter
 
         viewModel.liveListClip.observe(viewLifecycleOwner) {
-            it.forEach { article ->
-                if(!mListItems.contains(article)) {
-                    mListItems.add(article)
-                    binding?.list?.adapter?.notifyItemInserted(mListItems.lastIndex)
-                }
-            }
+            adapter.submitList(it)
         }
         return binding?.root
+    }
+
+    override fun onDestroyView() {
+        binding?.list?.adapter = null
+        binding = null
+        super.onDestroyView()
     }
 }

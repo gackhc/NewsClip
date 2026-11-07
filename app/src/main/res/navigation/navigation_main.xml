@@ -23,6 +23,8 @@
       <action
          android:id="@+id/action_clipListFragment_to_articleListFragment"
          app:destination="@id/articleListFragment"
+         app:popUpTo="@id/articleListFragment"
+         app:launchSingleTop="true"
          app:enterAnim="@anim/anim_slide_left_to_in"
          app:popEnterAnim="@anim/anim_slide_left_to_in"
          app:exitAnim="@anim/anim_slide_right_to_out"

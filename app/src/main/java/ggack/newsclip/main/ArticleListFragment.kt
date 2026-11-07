@@ -9,6 +9,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -49,26 +51,26 @@ class ArticleListFragment : Fragment() {
             }
         })
         ItemTouchHelper(ItemTouchHelperCallback(adapter)).attachToRecyclerView(binding?.list)
-        lifecycleScope.launch {
-            adapter.loadStateFlow.collectLatest {state ->
-                when (state.refresh) {
-                    is LoadState.Loading -> {
-                        binding?.swipeRefreshLayout?.isRefreshing = true
-                    }
-                    is LoadState.NotLoading -> {
-                        binding?.swipeRefreshLayout?.isRefreshing = false
-                    }
-                    is LoadState.Error -> {
-                        binding?.swipeRefreshLayout?.isRefreshing = false
-                        Toast.makeText(requireContext(), (state.refresh as LoadState.Error).error.toString(), Toast.LENGTH_SHORT).show()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                adapter.loadStateFlow.collectLatest {state ->
+                    when (state.refresh) {
+                        is LoadState.Loading -> {
+                            binding?.swipeRefreshLayout?.isRefreshing = true
+                        }
+                        is LoadState.NotLoading -> {
+                            binding?.swipeRefreshLayout?.isRefreshing = false
+                        }
+                        is LoadState.Error -> {
+                            binding?.swipeRefreshLayout?.isRefreshing = false
+                            Toast.makeText(requireContext(), (state.refresh as LoadState.Error).error.toString(), Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
             }
         }
         viewModel.liveListArticle.observe(viewLifecycleOwner) {
-            lifecycleScope.launch {
-                adapter.submitData(it)
-            }
+            adapter.submitData(viewLifecycleOwner.lifecycle, it)
         }
         binding?.list?.adapter = adapter
 
@@ -77,5 +79,11 @@ class ArticleListFragment : Fragment() {
         }
 
         return binding?.root
+    }
+
+    override fun onDestroyView() {
+        binding?.list?.adapter = null
+        binding = null
+        super.onDestroyView()
     }
 }

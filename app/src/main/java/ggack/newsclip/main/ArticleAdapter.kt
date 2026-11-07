@@ -37,7 +37,7 @@ class ArticleAdapter(private val listener: ItemSelectListener)
     }
 
     override fun onSwipe(position: Int) {
-        if(itemCount > position) {
+        if(position in 0 until itemCount) {
             notifyItemChanged(position)
             listener.onSwipe(position, getItem(position))
         }
@@ -45,7 +45,7 @@ class ArticleAdapter(private val listener: ItemSelectListener)
     companion object {
         private val COMPARATOR = object : DiffUtil.ItemCallback<ArticleModel>() {
             override fun areItemsTheSame(oldItem: ArticleModel, newItem: ArticleModel): Boolean =
-                oldItem.date == newItem.date
+                oldItem.url == newItem.url
 
             override fun areContentsTheSame(oldItem: ArticleModel, newItem: ArticleModel): Boolean =
                 oldItem == newItem

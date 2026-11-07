@@ -23,8 +23,8 @@ data class ResponseModel (
 @Entity
 data class ArticleModel (
     @Json(name = "headline") val headline : HeadLineModel,
-    @Json(name = "web_url") val url : String,
-    @PrimaryKey @Json(name = "pub_date") val date : String,
+    @PrimaryKey @Json(name = "web_url") val url : String,
+    @Json(name = "pub_date") val date : String,
     @Json(name = "multimedia") val multimedia : List<MultimediaModel>
 )
 

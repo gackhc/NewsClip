@@ -22,10 +22,16 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.vm = viewModel
         binding.lifecycleOwner = this
+        val navHost = supportFragmentManager.findFragmentById(R.id.container) as NavHostFragment
+        navHost.navController.addOnDestinationChangedListener { _, destination, _ ->
+            updateSelectedTab(destination.id)
+        }
 
         viewModel.liveEvent.observe(this) {
+            if (it == null) return@observe
+            viewModel.liveEvent.value = null
             val nav = supportFragmentManager.findFragmentById(R.id.container) as NavHostFragment?
-            when(it?.action) {
+            when(it.action) {
                 Constants.ACTION_TOAST -> {
                     Toast.makeText(this, it.param as String, Toast.LENGTH_SHORT).show()
                 }
@@ -50,5 +56,17 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onPostCreate(savedInstanceState: Bundle?) {
+        super.onPostCreate(savedInstanceState)
+        val navHost = supportFragmentManager.findFragmentById(R.id.container) as NavHostFragment
+        updateSelectedTab(navHost.navController.currentDestination?.id)
+    }
+
+    private fun updateSelectedTab(destinationId: Int?) {
+        binding.toggleGroup.check(
+            if (destinationId == R.id.clipListFragment) R.id.btnFavorite else R.id.btnHome
+        )
     }
 }

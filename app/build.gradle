@@ -6,6 +6,14 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withInputStream { localProperties.load(it) }
+}
+def nytApiKey = (project.findProperty('NYT_API_KEY') ?: System.getenv('NYT_API_KEY')
+        ?: localProperties.getProperty('NYT_API_KEY', '')).toString()
+
 android {
     namespace 'ggack.newsclip'
     compileSdk 32
@@ -16,6 +24,7 @@ android {
         targetSdk 32
         versionCode 1
         versionName "1.0"
+        buildConfigField 'String', 'NYT_API_KEY', groovy.json.JsonOutput.toJson(nytApiKey)
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
