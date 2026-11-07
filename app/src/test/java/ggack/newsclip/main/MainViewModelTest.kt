@@ -23,6 +23,7 @@ import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Assert
 import org.junit.Before
+import org.junit.After
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -72,6 +73,11 @@ class MainViewModelTest {
 
     private val testArticle = ArticleModel(HeadLineModel("headline_text"), "url_text", "pub_date_text",
         listOf(MultimediaModel("img_url_test")))
+
+    @After
+    fun closeDatabase() {
+        db.close()
+    }
 
     private fun insertArticleToClip() {
         viewModel.insertArticleToClip(testArticle)
